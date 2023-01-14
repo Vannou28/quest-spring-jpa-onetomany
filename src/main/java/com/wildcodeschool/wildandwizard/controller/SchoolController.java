@@ -37,9 +37,12 @@ public class SchoolController {
     @GetMapping("/school/register")
     public String inscription(Model out,
                               @RequestParam Long idSchool) {
-
+        
+        //Optional permet la possibilité d'etre null
         Optional<School> optionalSchool = schoolRepository.findById(idSchool);
+
         School school = new School();
+        
         if (optionalSchool.isPresent()) {
             school = optionalSchool.get();
         }
@@ -48,8 +51,9 @@ public class SchoolController {
 
         // call the method getWizards in School
         List<Wizard> wizards = new ArrayList<>();
-        Method method = getMethod(school, "getWizards",
-                new Class[]{});
+        Method method = getMethod(school, "getWizards", new Class[]{});
+        System.out.println("method : vannou");
+        System.out.println(school.getWizards());
         if (method != null) {
             try {
                 wizards = (List<Wizard>) method.invoke(school);
